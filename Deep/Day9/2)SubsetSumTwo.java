@@ -1,21 +1,20 @@
 class SubsetSumTwo {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
-        helper(res, nums, 0, new ArrayList<>());
+        helper(nums, res, new ArrayList<>(), 0);
         return res;
     }
 
-    private void helper(List<List<Integer>> res, int[] nums, int index, ArrayList<Integer> temp){
-        res.add(new ArrayList<>(temp));
-
+    private void helper(int[] nums, List<List<Integer>> res, ArrayList<Integer> ans, int index){
+        res.add(new ArrayList<>(ans));
         for(int i = index; i<nums.length; i++){
             if(i!=index && nums[i]==nums[i-1]){
                 continue;
             }
-
-            temp.add(nums[i]);
-            helper(res, nums, i+1, temp);
-            temp.remove(temp.size()-1);
+            ans.add(nums[i]);
+            helper(nums, res, ans, i+1);
+            ans.remove(ans.size()-1);
         }
     }
 }
